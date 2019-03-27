@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>01_var(对比let)</title>
+</head>
+<body>
+  <script>
+    /**
+     * 1.当前作用域变量提升；
+     * 2.不可重复命名，否则打不开页面
+    **/
+    //对比var
+    //若是函数，var 声明的变量仅存在于当前作用域，不存在变量提升
+    //console.info("testVar"+b);//引用报错: b is not defined
+    function testVar(){
+        var b =1;
+        console.info("testVar"+b);
+    }
+    testVar();
+
+    console.info(i);//undefined，var 变量提升
+    for (var i = 0; i < 10; i++) {
+        console.info(i);//0~9
+    }
+
+    console.info(i);//10  
+
+    var arr = [];
+    console.info(i);//var 变量提升
+    for (var i = 0; i < 10; i++) {//var 至全局
+      //var i = 6; //若重复赋值，会使每一次循环的i都赋值为6，死循环
+      //i = 6;
+      arr[i] = function () {
+        var i = 6;//仅可在此处重复命名，此为子作用域
+        console.log(i);//输出
+      };
+    }
+    arr[6]();//10
+
+    var tmp = 123;
+    if (true) {
+      var tmp = 'abc'; // 重新赋值，严格模式下是不允许的
+      //let tmp;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>03_块级作用域&函数声明</title>
+</head>
+<body>
+  <script>
+    /**
+    * 疑问：函数能否在块级作用域之中声明？(允许,但不推荐这么做，使用函数表达式let a = f())
+    * 1.ES5规定，函数只能在顶层作用域和函数作用域之中声明，不能再块级作用域声明;
+    * 2.chorme已符合ES6的浏览器;
+    **/
+    //ES5 非法示例1:
+    if(true){
+      //function f() {}
+    }
+    //ES5 非法示例2：
+    try{
+      //function f() {}
+    }catch(e){
+
+    }
+    //但浏览器没有遵守此规定，为了兼容以前的旧代码，还是支持在块级作用域之中声明函数，因此上面两种情况实际都能运行，不会报错；
+    //为了兼容旧代码，浏览器的实现可以不遵守--块级作用域内声明的函数的行为类似于let
+    
+    //ES6引入了块级作用域，明确允许在块级作用域之中声明函数。ES6规定，块级作用域之中，函数声明语句的行为类似于let，在块级作用域之外不可引用；
+    function f() { console.log('I am outside!'); }
+    (function () {
+      // ES5中：f()会提升到函数头部，打印'I am inside!'；因为类似于var声明
+      console.info(f);//var f = undefind;
+      if (false) {
+        // 重复声明一次函数f
+        function f() { console.log('I am inside!'); }
+      }
+      //f();//ES6之中会f()报错：f()函数不存在
+    }());
+    
+    //为了避免这种报错，以及兼容老代码，故浏览器的实现可以不遵守上面的规定，可以有自己的行为方式；
+    //1.允许在块级作用域内声明函数；
+    //2.函数声明类似于var，即会提升到全局作用域或函数作用域的头部；
+    //3.同时，函数声明还会提升到所在的块级作用域的头部
+    //上述三条规则只对ES6的浏览器实现有效，其他环境的实现不用遵守，还是将块级作用域的函数声明当作let处理
+
+    //考虑到环境导致的行为差异太大，应该避免在块级作用域内声明函数；若需要应写成函数表达式，符合逻辑;
+    //函数声明语句
+    console.info(fc);//var fc = undefind;
+    { //块级作用域内的函数声明默认当作var处理
+      let a = 'secret';
+      function fc() { //此处提升至全局
+        console.info(a);
+      }
+      fc();//secret
+    }
+    fc();//secret
+    // 函数表达式
+    { //块级作用域内的函数表达式必须做let处理
+      let a = 'secret!';
+      let fc = function () {
+        console.info(a);
+      };
+      fc();//secret!
+    }
+    fc();//secret
+  </script>
+</body>
+</html>

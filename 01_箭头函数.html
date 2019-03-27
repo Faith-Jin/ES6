@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			// Expression bodies  声明主体
+			var evens = [21,25,35,67,02],
+				fives = [];
+			var odds = evens.map(v => v + 1);
+			var nums = evens.map((v, i) => v + i);
+
+			// Statement bodies  处理主体
+			nums.forEach(v => {
+			  if (v % 5 === 0)
+				fives.push(v);
+			});
+			console.log(fives);
+			// Lexical this
+			var bob = {
+			  _name: "Bob",
+			  _friends: [],
+			  printFriends() {
+				this._friends.forEach(f =>
+				  console.log(this._name + " knows " + f));
+			  }
+			};
+
+			// Lexical arguments 词法参数
+			function square() {
+			  let example = () => {
+				let numbers = [];
+				for (let number of arguments) {
+				  numbers.push(number * number);
+				}
+
+				return numbers;
+			  };
+			  console.log(arguments);
+			  // console.log(number,numbers); -- 仅支持arguments
+			  
+			  let example2 = function(){
+				let numbers2 = [];
+				for (let number2 of arguments2) {
+				  numbers2.push(number2 * number2);
+				}
+				  
+				return numbers2; 
+			  }
+			  //console.log(arguments2,numbers2,number2); -- 不支持参数共享
+			  
+			  return example();
+			}
+
+			square(2, 4, 7.5, 8, 11.5, 21); // returns: [4, 16, 56.25, 64, 132.25, 441]
+		</script>
+	</body>
+</html>

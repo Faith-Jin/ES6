@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>01_let</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <script>
+        /** 
+        * 1.块级作用域；
+        * 2.不存在变量提升；
+        * 3.暂时性死区；
+        * 4.不允许重复声明
+        **/
+        //1.ES6新增let命令，用来声明变量，块级作用域。所声明的变量，只在let命令所在的代码块内生效
+        let a = 11;
+        testLet();
+        function testLet(){
+            console.info(a);
+            a = 5;
+            console.info(a);
+            //let a = 66;
+            //console.info(a);//重复声明，ReferenceError: a is not defined
+        }
+
+        //2.不存在变量提升，引用报错：i is not defined
+        //console.log(i);
+        for (let i = 0; i < 10; i++) {
+            console.log(i);//0~9
+        }
+
+        //console.log(i);// ReferenceError: i is not defined
+
+        var arr = [];
+        for (let i = 0; i < 10; i++) {
+            arr[i] = function () {
+                console.log(i);//输出
+            };
+        }
+        arr[6]();//6
+
+        for (let i = 0; i < 3; i++) {//父级作用域
+            //var i = 'abc';//SyntaxError: Identifier 'i' has already been declared
+            let i = 'abcd';//子级作用域
+            console.log(i);
+        }
+        //abc
+        //abc
+        //abc
+
+        //3.暂时性死区(temporal dead zone,简称TDZ)
+        //块级作用域内存在let所声明的变量，则此变量就"绑定"当前区域，不再受当前区域其他声明所影响；
+        //ES6明确规定，如果区块中存在let&const命令，则使用这些命令所声明的变量就从js编译开始就形成了封闭作用域；只要在声明之前使用这些变量就会报错
+        var tmp = 123;
+
+        if (true) {
+            tmp = 'abc'; //ReferenceError：tmp is not defined
+            //let tmp; //绑定当前块级作用域
+        }
+
+        var tmp = 123;//'{}'会限制当前区域
+        if (true) {
+            //若无 '{}'会报错；SyntaxError: Unexpected token const(意想不到的令牌常量)
+            //const tmp = 'abc'; // ReferenceError
+            let tmp = '2df'; // SyntaxError: Identifier 'tmp' has already been declared(标识符'tmp'已经声明) 
+        }
+
+        //在let命令声明变量tmp之前，都属于变量tmp的"死区"
+        if (true) {
+            // TDZ开始
+            //tmp = 'abc'; // ReferenceError：tmp is not defined
+            //console.log(tmp); // ReferenceError：tmp is not defined
+
+            let tmp; // TDZ结束
+            console.log(tmp); // undefined
+
+            tmp = 123;
+            console.log(tmp); // 123
+        }
+
+        //"暂时性死区" 也意味着typeof不再是一个百分之百安全的操作
+        //typeof x; // ReferenceError:x is not defined
+        let x;
+
+        //如果一个变量根本没有被声明，使用typeof反而不会报错
+        console.info(typeof undeclared_variable) // "undefined"
+        //在没有let之前，typeof运算符书是100%安全的；为了养成良好的编程习惯，变量一定要在声明之后使用
+
+        //有些'死区'不易被发现
+        //报错原因：因为参数x默认值等于另一个参数y，而此时y还没有声明，所以属于'死区'。
+        // function bar(x = y, y = 2) { //ReferenceError: y is not defined
+        //     return [x, y];
+        // }
+        // bar();
+        function bar(x = 2, y = x) {
+            return [x, y];
+        }
+        bar();//[2,2]
+
+        var bb = bb;
+
+        //let bbb = bbb;//ReferenceError: bbb is not defined
+        //使用let声明变量时，只要变量在还没有声明完成前使用，就会报错；
+
+        //4.不允许重复声明
+        function func(){
+            let a = 10;
+            var a = 1;
+        }
+        //func();// SyntaxError: Identifier 'a' has already been declared
+        
+        function funcc(){
+            let a = 10;
+            let a = 1;
+        }
+        //funcc();// SyntaxError: Identifier 'a' has already been declared
+        
+        //不能再函数内部重新声明参数
+        function func(arg) {
+            let arg;
+        }
+        //func(); // SyntaxError: Identifier 'arg' has already been declared(arg已经声明)
+
+        function funcc(arg) {
+            {
+                let arg;
+            }
+        }
+        funcc();//不报错，'{}'会限制当前区域
+    
+    </script>
+</body>
+</html>

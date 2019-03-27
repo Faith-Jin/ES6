@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>04_const命令</title>
+</head>
+<body>
+  <script>
+    /**
+    * 1.const声明一个只读的常量，一旦声明，常量的值就不能改变；
+    * 2.const声明的变量不得改变值，所以const一旦声明变量，就必须立即初始化，不能留到之后赋值；
+    * 3.const的作用域与let命令相同：只在声明所在的块级作用域内有效；
+    * 4.const命令声明的常量也是不提升，同样存在暂时性死区，只能在声明的位置之后使用；
+    * 5.const声明的常量，也与let一样不可重复声明；
+    **/
+    const PI = 3.1415;
+    //PI = 3; //TypeError: Assignment to constant variable.(类型错误，赋值给常量变量)
+    
+    //const foo; //SyntaxError: Missing initializer in const declaration(语法错误，const声明缺少初始化赋值)
+    //只声明不赋值就会报错；
+
+    if(true){
+      const MAX = 5;
+    }
+    //MAX; //ReferenceError: MAX is not defined.(MAX没有定义)
+
+    if(true){
+      //console.log(MAX); // ReferenceError:MAX is not defined.(引用错误：MAX没有定义)
+      const MAX = 5;
+    }
+
+    var message = 'Hello!';
+    let age = 25;
+    //以下情况会报错
+    const messag = 'Goodbye!';
+    //const age = 30; //SyntaxError: Identifier 'age' has already been declared.(age已经声明)
+
+    //const本质
+    /**const实际上保证的是，变量指向的那个内存地址所保存的数据不得改动。
+    * 对于简单类型的数据(数值、字符串、布尔值)，值就保存在变量指向的那个内存地址，因此等同于常量；
+    * 但对于复合类型的数据(主要是对象和数组)，变量指向的内存地址，保存的只是一个指向实际数据的指针，const只能保证这个指针是固定的,至于它指向的数据结构是不是可变的，就不受控制；
+    * 因此，将一个对象声明为常量必须非常小心；
+    **/
+    const foo = {};
+    //为foo添加属性，可以成功；
+    foo.prop = 123;
+    foo.prop;
+    //将foo指向另一个对象，就会报错；
+    foo = {};//TypeError: Assignment to constant variable.(类型错误，无效的赋值)
+    //TypeError: "foo" is read-only.(官方)
+  </script>
+</body>
+</html>
