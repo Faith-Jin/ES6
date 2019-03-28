@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			
+			//对象字面量被增强了，写法更简洁与灵活，具体表现在：
+			/*可在对象字面里定义原型，
+			定义方法可以不用function的关键字，
+			直接调用父类的属性与方法；*/
+			var human = {
+				breathe(){
+					console.log(33333)
+				},
+				company:"freelancer1"
+			}
+			
+			var wokre = {
+				__proto__:human,     //“_”必须为双短下划线 wokre.breathe is not a function(未定义)
+				//'__proto__'(指针)设置此对象的原型为human，相当继承了human
+				company:"freelancer2",
+				work(){
+					console.log(222222);
+				}
+			}
+			
+			human.breathe();
+			wokre.work();
+			wokre.breathe();
+			console.log(wokre.company);
+		</script>
+	</body>
+</html>

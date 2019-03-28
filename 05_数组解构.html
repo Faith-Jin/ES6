@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*var someArray = [1,2,3]
+			console.log(someArray[0]);
+			直接返回一个数组，然后数组中的值会自动解析到对应接收该值的变量中*/
+			//如果使用解构赋值的特性，将会使等效的代码变得更加简洁并且可读性更高
+			var [first,second,third] = [1,2,3]
+			console.log(first);
+			console.log(second);
+			console.log(third);
+			
+			var [foo,[[bar],baz]] = [1,[[2],3]]
+			console.log(foo);
+			console.log(bar);
+			console.log(baz);
+			
+			//可以在对应位留空来跳过被解析数组中的某些元素
+			var [,,third] = ["bar","baz","foo"];
+			console.log(third);
+			
+			var {a,b} = {a:"11",b:"22"}
+			console.log(a);
+
+			let [head, ...tail] = [1, 2, 3, 4];
+			console.info(head);
+			console.info(tail);
+		</script>
+	</body>
+</html>

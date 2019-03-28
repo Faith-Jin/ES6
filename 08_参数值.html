@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function sayHello(name){
+				var name = name||"dude";
+				console.log("hello" +name)
+			}
+			
+			sayHello();//hellodude
+			sayHello("屈原");//hello屈原
+			
+			function sayHello2(name='dube'){
+				console.log("hello" +name)
+			}
+			sayHello2();//hellodude
+			sayHello2(333);//hello333
+			
+			function add(...X){//不定参数。可写多个
+				
+				//reduce()将元素的前两个传给输入函数，产生一个return值，新产生的return值与下一个元素（第三个元素）组成两个元素，再被传给输入函数，直到最后一个值为止
+				return X.reduce((m,n) => m + n);
+			}
+			console.log(add(1,2,3,4))
+		</script>
+	</body>
+</html>

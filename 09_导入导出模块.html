@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--Google公司的Traceur转码器，可以将ES6代码转为ES5代码
+		Traceur运行将ES6代码直接插入网页
+		第二个和第三个文件将第一个库文件用于浏览器环境-->
+		<script src="js/traceur.js"></script>
+		<script src="js/BrowserSystem.js"></script>
+		<script src="js/bootstrap.js"></script>
+	</head>
+	<body>
+		<script type="module">
+			// data是可以自定名，用来接受defauuit.js导出的-
+			import data from './Out/default.js';
+			show(data);
+			data('hello balay');
+			import {userName,weight,sex} from './Out/variable.js';
+			show(userName+"-----"+weight+"--------"+sex);
+			// cmd模块化写法；cnd模块化写法；
+			
+			// import {firstName,lastName,year} from './Out/variable.js'
+			show (firstName+"------"+lastName+"------"+year)
+			// import {foo,koo} from './Out/exfunc.js';
+			foo();
+			koo();
+		</script>
+	</body>
+</html>
