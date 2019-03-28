@@ -48,13 +48,15 @@
     //函数声明语句
     console.info(fc);//var fc = undefind;
     { //块级作用域内的函数声明默认当作var处理
+      console.info(this);
       let a = 'secret';
       function fc() { //此处提升至全局
         console.info(a);
+        console.info(this);
       }
-      fc();//secret
+      //fc();//secret
     }
-    fc();//secret
+    //fc();//secret
     // 函数表达式
     { //块级作用域内的函数表达式必须做let处理
       let a = 'secret!';

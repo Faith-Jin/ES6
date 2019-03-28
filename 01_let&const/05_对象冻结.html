@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>05_对象冻结</title>
+</head>
+<body>
+  <script>
+    //对象冻结，应使用Object.freeze方法
+    let amObj = {prop:22, props:{item:110}, aArr:[33,99,11,00]};
+    const foo = Object.freeze(amObj);
+    //常规模式，下面一行不起作用;
+    //foo.prop = 123;// undefined
+    
+    foo.prop = 123;// 严格模式下报错，类型错误:不能添加属性，对象不可扩展
+    foo.props.item = 11;// 如此可修改对象内的对象
+    console.info(foo);
+    //let foo = 11;
+    //var 可跨越script块 全局定义作用域
+
+    //将对象彻底冻结的函数;
+    var constantize = (obj) => {
+      Object.freeze(obj);
+      Object.keys(obj).forEach( (key, i) => {
+        if ( typeof obj[key] === 'object' ) {
+          constantize( obj[key] );
+        }
+      });
+    };
+    let arrItem = {name:1,items:{age:22},arr:[2,33]};
+    constantize(arrItem);
+    arrItem.items.age = 33;//如此就不可修改
+    console.info(arrItem);
+  </script>
+
+  <!-- const可跨越script块 全局定义作用域 -->
+  <!-- <script src="./00_let&js.js"></script> -->
+
+  <!-- let可跨越script块 全局定义作用域 -->
+  <script> // SyntaxError: Identifier 'foo' has already been declared(语法错误，标识符'foo'已经声明)
+    //let foo = 11; 
+  </script>
+</body>
+</html>

@@ -48,10 +48,18 @@
     foo.prop = 123;
     foo.prop;
     //将foo指向另一个对象，就会报错；
-    foo = {};//TypeError: Assignment to constant variable.(类型错误，无效的赋值)
+    //foo = {}; //TypeError: Assignment to constant variable.(类型错误，无效的赋值)
     //TypeError: "foo" is read-only.(官方)
 
-    
+    foo.prop = 345; //可修改属性值
+    foo.clear = '111';//可执行
+    delete foo.clear;//可删除属性
+    foo.clear;//undefined
+
+    const aa = [];
+    a.push('Hello');//可执行
+    a.length = 0; //可执行
+    a = ['Dave'];// 报错，不允许修改指向
   </script>
 </body>
 </html>
