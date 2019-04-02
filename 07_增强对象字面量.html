@@ -13,7 +13,7 @@
 			直接调用父类的属性与方法；*/
 			var human = {
 				breathe(){
-					console.log(33333)
+					console.log("呼吸中...1")
 				},
 				company:"freelancer1"
 			}
@@ -23,8 +23,11 @@
 				//'__proto__'(指针)设置此对象的原型为human，相当继承了human
 				company:"freelancer2",
 				work(){
-					console.log(222222);
-				}
+					console.log("工作中...");
+				},
+				breathe(){
+					console.log("呼吸中...2")
+				},
 			}
 			
 			human.breathe();
